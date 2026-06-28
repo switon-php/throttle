@@ -81,7 +81,7 @@ class RateLimiterTest extends TestCase
     {
         // Arrange
         $method = new ReflectionMethod(self::class, 'dummyMethodWithoutAttribute');
-        $event = new RequestValidating($method);
+        $event = new RequestValidating($this->createStub(\Switon\Http\RequestHandlerInterface::class), $method);
         $rateLimiter = $this->makeRateLimiter();
 
         // Act & Assert - Should not throw exception
@@ -96,7 +96,7 @@ class RateLimiterTest extends TestCase
     {
         // Arrange
         $method = new ReflectionMethod(self::class, 'dummyMethodWithRateLimit');
-        $event = new RequestValidating($method);
+        $event = new RequestValidating($this->createStub(\Switon\Http\RequestHandlerInterface::class), $method);
         $rateLimiter = $this->makeRateLimiter();
 
         $this->mockIdentity->method('isGuest')->willReturn(true);
@@ -118,7 +118,7 @@ class RateLimiterTest extends TestCase
     {
         // Arrange
         $method = new ReflectionMethod(self::class, 'dummyMethodWithRateLimit');
-        $event = new RequestValidating($method);
+        $event = new RequestValidating($this->createStub(\Switon\Http\RequestHandlerInterface::class), $method);
         $rateLimiter = $this->makeRateLimiter();
 
         $this->mockIdentity->method('isGuest')->willReturn(true);
@@ -145,7 +145,7 @@ class RateLimiterTest extends TestCase
     {
         // Arrange
         $method = new ReflectionMethod(self::class, 'dummyMethodWithoutAttribute');
-        $event = new RequestValidating($method);
+        $event = new RequestValidating($this->createStub(\Switon\Http\RequestHandlerInterface::class), $method);
         $rateLimiter = $this->makeRateLimiter(['limits' => ['10/m']]);
 
         $this->mockIdentity->method('isGuest')->willReturn(true);
@@ -167,7 +167,7 @@ class RateLimiterTest extends TestCase
     {
         // Arrange
         $method = new ReflectionMethod(self::class, 'dummyMethodWithoutAttribute');
-        $event = new RequestValidating($method);
+        $event = new RequestValidating($this->createStub(\Switon\Http\RequestHandlerInterface::class), $method);
         $rateLimiter = $this->makeRateLimiter(['limits' => ['10/m', '100/h']]);
 
         $this->mockIdentity->method('isGuest')->willReturn(true);
@@ -188,7 +188,7 @@ class RateLimiterTest extends TestCase
     {
         // Arrange
         $method = new ReflectionMethod(self::class, 'dummyMethodWithoutAttribute');
-        $event = new RequestValidating($method);
+        $event = new RequestValidating($this->createStub(\Switon\Http\RequestHandlerInterface::class), $method);
         $rateLimiter = $this->makeRateLimiter(['limits' => ['100/m'], 'burst' => 20]);
 
         $this->mockIdentity->method('isGuest')->willReturn(true);
@@ -208,7 +208,7 @@ class RateLimiterTest extends TestCase
     {
         // Arrange
         $method = new ReflectionMethod(self::class, 'dummyMethodWithoutAttribute');
-        $event = new RequestValidating($method);
+        $event = new RequestValidating($this->createStub(\Switon\Http\RequestHandlerInterface::class), $method);
         $rateLimiter = $this->makeRateLimiter(['limits' => null]);
 
         // Act
@@ -225,7 +225,7 @@ class RateLimiterTest extends TestCase
     {
         // Arrange
         $method = new ReflectionMethod(ClassLevelRateLimitController::class, 'indexAction');
-        $event = new RequestValidating($method);
+        $event = new RequestValidating($this->createStub(\Switon\Http\RequestHandlerInterface::class), $method);
         $rateLimiter = $this->makeRateLimiter();
         $this->mockIdentity->method('isGuest')->willReturn(true);
         $this->mockRequest->method('ip')->willReturn('10.9.0.1');
@@ -245,7 +245,7 @@ class RateLimiterTest extends TestCase
     {
         // Arrange
         $method = new ReflectionMethod(MethodOverridesClassRateLimitController::class, 'overrideAction');
-        $event = new RequestValidating($method);
+        $event = new RequestValidating($this->createStub(\Switon\Http\RequestHandlerInterface::class), $method);
         $rateLimiter = $this->makeRateLimiter();
         $this->mockIdentity->method('isGuest')->willReturn(true);
         $this->mockRequest->method('ip')->willReturn('10.9.0.2');
@@ -265,7 +265,7 @@ class RateLimiterTest extends TestCase
     {
         // Arrange
         $method = new ReflectionMethod(self::class, 'dummyMethodWithRateLimit');
-        $event = new RequestValidating($method);
+        $event = new RequestValidating($this->createStub(\Switon\Http\RequestHandlerInterface::class), $method);
         $rateLimiter = $this->makeRateLimiter();
 
         $this->mockIdentity->method('isGuest')->willReturn(false);
@@ -443,7 +443,7 @@ class RateLimiterTest extends TestCase
     {
         // Arrange
         $method = new ReflectionMethod(self::class, 'dummyMethodWithRateLimit');
-        $event = new RequestValidating($method);
+        $event = new RequestValidating($this->createStub(\Switon\Http\RequestHandlerInterface::class), $method);
         $rateLimiter = $this->makeRateLimiter(['prefix' => 'custom:rl:']);
 
         $this->mockIdentity->method('isGuest')->willReturn(true);

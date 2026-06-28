@@ -125,13 +125,13 @@ class RateLimiter implements RateLimiterInterface
 
             $cacheKey = $key . ':' . $limit . '/' . $period;
             $burstForWindow = $k === 0 ? $burst : null;
-            $this->eventDispatcher->dispatch(new Throttling($key, $limit, $period, $burstForWindow));
+            $this->eventDispatcher->dispatch(new Throttling($this, $key, $limit, $period, $burstForWindow));
 
             if ($k === 0 && $burst !== null) {
                 if (($used = (int)$this->redisCache->get($cacheKey)) === 0) {
                     $this->redisCache->setex($cacheKey, $period, '1');
                 } elseif ($used >= $limit) {
-                    $this->eventDispatcher->dispatch(new Throttled($key, $limit, $period, $used, $burstForWindow));
+                    $this->eventDispatcher->dispatch(new Throttled($this, $key, $limit, $period, $used, $burstForWindow));
                     RateLimitExceededException::raise('Rate limit exceeded, please try again later');
                 } elseif (($left = $this->redisCache->pttl($cacheKey)) <= 0) {
                     $this->redisCache->setex($cacheKey, $period, '1');
@@ -141,7 +141,7 @@ class RateLimiter implements RateLimiterInterface
                         $diff = $ideal - $used;
                         $this->redisCache->incrBy($cacheKey, $diff);
                     } elseif ($used > $ideal + $burst) {
-                        $this->eventDispatcher->dispatch(new Throttled($key, $limit, $period, $used, $burstForWindow));
+                        $this->eventDispatcher->dispatch(new Throttled($this, $key, $limit, $period, $used, $burstForWindow));
                         RateLimitExceededException::raise('Rate limit exceeded, please try again later');
                     } elseif ($this->redisCache->incr($cacheKey) === 1) {
                         $this->redisCache->expire($cacheKey, $period);
@@ -150,7 +150,7 @@ class RateLimiter implements RateLimiterInterface
             } elseif (($count = $this->redisCache->incr($cacheKey)) === 1) {
                 $this->redisCache->expire($cacheKey, $period);
             } elseif ($count > $limit) {
-                $this->eventDispatcher->dispatch(new Throttled($key, $limit, $period, $count, $burstForWindow));
+                $this->eventDispatcher->dispatch(new Throttled($this, $key, $limit, $period, $count, $burstForWindow));
                 RateLimitExceededException::raise('Rate limit exceeded: {count}/{limit} requests', ['limit' => $limit, 'count' => $count]);
             }
         }
