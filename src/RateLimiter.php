@@ -7,6 +7,7 @@ namespace Switon\Throttle;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use ReflectionMethod;
 use Switon\Core\AppInterface;
+use Switon\Core\Attributes;
 use Switon\Core\Attribute\Autowired;
 use Switon\Eventing\Attribute\EventListener;
 use Switon\Eventing\ListenerProviderInterface;
@@ -65,18 +66,13 @@ class RateLimiter implements RateLimiterInterface
 
     protected function getRateLimit(ReflectionMethod $rMethod): RateLimitAttribute|false
     {
-        if (($attributes = $rMethod->getAttributes(RateLimitAttribute::class)) !== []) {
-            /** @noinspection PhpIncompatibleReturnTypeInspection */
-            return $attributes[0]->newInstance();
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        if (($rateLimit = Attributes::first($rMethod, RateLimitAttribute::class)) !== null) {
+            return $rateLimit;
         }
 
-        $rClass = $rMethod->getDeclaringClass();
-        if (($attributes = $rClass->getAttributes(RateLimitAttribute::class)) !== []) {
-            /** @noinspection PhpIncompatibleReturnTypeInspection */
-            return $attributes[0]->newInstance();
-        }
-
-        return false;
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return Attributes::first($rMethod->getDeclaringClass(), RateLimitAttribute::class) ?? false;
     }
 
     #[EventListener] public function onValidating(RequestValidating $event): void
