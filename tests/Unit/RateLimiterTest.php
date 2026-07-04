@@ -511,7 +511,7 @@ class RateLimiterTest extends TestCase
     /**
      * @param array<string, mixed> $overrides
      */
-    private function makeRateLimiter(array $overrides = []): RateLimiter
+    protected function makeRateLimiter(array $overrides = []): RateLimiter
     {
         return $this->make(RateLimiter::class, array_merge([
             AppInterface::class => $this->mockApp,

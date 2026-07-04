@@ -6,7 +6,7 @@ namespace Switon\Throttle\Tests\Unit;
 
 use Switon\Core\Exception\InvalidValueException;
 use Switon\Throttle\RateLimitPeriodParser;
-use Switon\Throttle\Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class RateLimitPeriodParserTest extends TestCase
 {

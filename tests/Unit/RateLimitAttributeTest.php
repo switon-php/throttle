@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Switon\Throttle\Tests\Unit;
 
 use Switon\Throttle\Attribute\RateLimit;
-use Switon\Throttle\Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class RateLimitAttributeTest extends TestCase
 {
