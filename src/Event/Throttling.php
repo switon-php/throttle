@@ -12,7 +12,7 @@ use Switon\Throttle\RateLimiterInterface;
 /**
  * Event emitted before applying one rate-limit window.
  *
- * Log category: throttle lifecycle.
+ * Log category: `switon.throttle.throttling`
  *
  * Guidance: Event only carries throttling metadata; resolve request/user context in listeners.
  *

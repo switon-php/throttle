@@ -12,7 +12,7 @@ use Switon\Throttle\RateLimiterInterface;
 /**
  * Event emitted when rate-limit is exceeded.
  *
- * Log category: throttle lifecycle.
+ * Log category: `switon.throttle.throttled`
  *
  * Guidance: Event only carries exceeded-limit metadata; resolve request/user context in listeners.
  *
