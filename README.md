@@ -33,7 +33,7 @@ final class ApiController
 }
 ```
 
-Docs: https://docs.switon.dev/latest/throttle
+Docs: https://github.com/switon-php/throttle/blob/main/docs/README.md
 
 ## License
 

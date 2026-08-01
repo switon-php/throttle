@@ -156,5 +156,5 @@ Throttle also depends on `Switon\Redis\ClientInterface`.
 
 - **Need setup questions answered quickly:** [FAQ](faq.md#throttle-faq)
 - **Need design trade-offs:** [Design Rationale](design.md#design-rationale)
-- **Need endpoint protection walkthrough:
-  ** [Protect endpoints with rate limits](../../../docs/en/guides/protect-endpoints-with-rate-limits.md#protect-endpoints-with-rate-limits)
+- **HTTP actions and request flow:** [HTTP Package](https://github.com/switon-php/http/blob/main/docs/README.md)
+- **Redis-backed counters:** [Redis Package](https://github.com/switon-php/redis/blob/main/docs/README.md)

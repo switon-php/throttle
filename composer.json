@@ -19,7 +19,7 @@
     "support": {
         "source": "https://github.com/switon-php/throttle",
         "issues": "https://github.com/switon-php/throttle/issues",
-        "docs": "https://docs.switon.dev/latest/throttle"
+        "docs": "https://github.com/switon-php/throttle/blob/main/docs/README.md"
     },
     "require": {
         "php": ">=8.3",
